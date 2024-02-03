@@ -6,7 +6,7 @@
 
 float prixEntree(int adultes, int enfants) {
     float prixFamille = TFAMILLE;
-    if (adultes > 2 && enfants > 3) {
+    if (adultes > 2) {
         prixFamille += (adultes - 2) * TADULTE;
     }
     if (enfants > 3) {
