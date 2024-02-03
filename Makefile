@@ -16,7 +16,7 @@ BUILD_DIR := ./build
 SRC_DIR := ./src
 INC_DIRS := ./include
 LIB_DIRS := ./lib
-NEED_CINI := cini # set this to nothing to disable custom cini
+NEED_CINI := cini
 
 ifeq ($(OS), macOS)
 INC_DIRS += /opt/homebrew/include/
@@ -25,6 +25,7 @@ endif
 
 ifeq ($(OS), Linux)
 # check if a native cini is on the computer
+INC_DIRS += /usr/include/
 ifneq ("$(wildcard /usr/include/cini.h)","")
 NEED_CINI :=
 endif
@@ -36,11 +37,12 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 LIB_DIR_FLAGS := $(addprefix -L,$(LIB_DIRS))
 
 LIBS := cini m #we don't care about including everything for everything
-LIBS_FLAGS := $(addprefix -l,$(LIBS))
 
-ifeq ($(NEED_CINI), cini)
+ifeq ($(NEED_CINI),cini)
 LIBS += SDL2 SDL2_ttf
 endif
+
+LIBS_FLAGS := $(addprefix -l,$(LIBS))
 
 # Find all the C files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.

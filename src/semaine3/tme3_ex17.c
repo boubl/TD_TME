@@ -10,7 +10,7 @@
 void pos_neg_zero(int num, int *pos, int *neg, int *zero) {
     // attention magie noire
     // Basiquement cette instruction:
-    // - Cree une liste des pointeurs: (int *[]){neg, zero, pos})
+    // - Cree une liste des pointeurs: (int *[]){neg, zero, pos}
     // - Determine le signe de 'num' et ajoute 1: (num > 0) - (num < 0) + 1
     // - Grace a ca on accede au pointeur correspondant dans notre liste
     // - Puis on dereference ce pointeur et on incremente la valeur

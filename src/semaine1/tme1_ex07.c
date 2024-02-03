@@ -4,7 +4,7 @@ int signeProduit(int a, int b) {
     if (a == 0 || b == 0) {
         return 0;
     }
-    // Ici le ptit chapeau c'est un 'XOR', un OU eXclusif.
+    // Ici le ptit chapeau c'est un 'XOR', un ou exclusif (eXclusive OR).
     // Il donne vrai seulement si c'est different.
     // A utiliser que avec des 1 et des 0 sauf si vous savez ce que vous
     // faites parce que c'est une operation binaire (cherchez la difference

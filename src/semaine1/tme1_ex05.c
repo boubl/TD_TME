@@ -7,15 +7,14 @@ int discriminant(int a, int b, int c) { return (b * b) - (4 * a * c); }
 void afficheRacines(int a, int b, int c) {
     int delta = discriminant(a, b, c);
     if (delta < 0) {
-        printf("Pas de racine\n");
+        printf("Pas de racine reelle\n");
     } else if (delta == 0) {
         float racine = (float)(-b) / (2 * a);
-        printf("racine = %.2f\n", racine);
+        printf("La racine double est %.2f\n", racine);
     } else {
         float r1 = (-b - sqrt(delta)) / (2 * a);
         float r2 = (-b + sqrt(delta)) / (2 * a);
-        printf("r1 = %.2f\n", r1);
-        printf("r2 = %.2f\n", r2);
+        printf("Les deux racines sont %.2f et %.2f\n", r2, r1);
     }
 }
 
