@@ -24,7 +24,8 @@ LIB_DIRS += /opt/homebrew/lib/
 endif
 
 ifeq ($(OS), Linux)
-ifneq ("$(wildcard $(PATH_TO_FILE))","")
+# check if a native cini is on the computer
+ifneq ("$(wildcard /usr/include/cini.h)","")
 NEED_CINI :=
 endif
 endif
@@ -34,8 +35,12 @@ endif
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 LIB_DIR_FLAGS := $(addprefix -L,$(LIB_DIRS))
 
-LIBS := cini SDL2 SDL2_ttf m #we don't care about including everything for everything
+LIBS := cini m #we don't care about including everything for everything
 LIBS_FLAGS := $(addprefix -l,$(LIBS))
+
+ifeq ($(NEED_CINI), cini)
+LIBS += SDL2 SDL2_ttf
+endif
 
 # Find all the C files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
@@ -46,7 +51,7 @@ OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%)
 CFLAGS := -Wall $(INC_FLAGS) $(LIB_DIR_FLAGS) $(LIBS_FLAGS)
 
 # Build all targets.
-all: cini $(OBJS)
+all: $(NEED_CINI) $(OBJS)
 
 .PHONY: cini
 cini: ./lib/libcini.a ./include/cini.h
