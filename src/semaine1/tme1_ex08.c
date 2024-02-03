@@ -1,29 +1,31 @@
 #include <stdio.h>
 
-#define ADULTE 22.7
-#define ENFANT 10.75
-#define ENFANTM5 0
-#define FAMILLE 57.80
+#define TADULTE 22.7
+#define TENFANT 10.75
+#define TFAMILLE 57.80
 
 float prixEntree(int adultes, int enfants) {
-  float prixFamille = FAMILLE;
-  if (adultes > 2 && enfants > 3) {
-    prixFamille += (adultes - 2)*ADULTE + (enfants - 3)*ENFANT;
-  }
-  float prixSans = adultes*ADULTE + enfants*ENFANT;
+    float prixFamille = TFAMILLE;
+    if (adultes > 2 && enfants > 3) {
+        prixFamille += (adultes - 2) * TADULTE;
+    }
+    if (enfants > 3) {
+        prixFamille += (enfants - 3) * TENFANT;
+    }
+    float prixSans = adultes * TADULTE + enfants * TENFANT;
 
-  if (prixFamille < prixSans) {
-    return prixFamille;
-  } else {
-    return prixSans;
-  }
+    if (prixFamille < prixSans) {
+        return prixFamille;
+    } else {
+        return prixSans;
+    }
 }
 
 int main() {
-  printf("%f\n", prixEntree(2, 3));
-  printf("%f\n", prixEntree(2, 2));
-  printf("%f\n", prixEntree(2, 1));
-  printf("%f\n", prixEntree(1, 3));
+    printf("%.2f\n", prixEntree(2, 3));
+    printf("%.2f\n", prixEntree(2, 2));
+    printf("%.2f\n", prixEntree(2, 1));
+    printf("%.2f\n", prixEntree(1, 3));
 
-  return 0;
+    return 0;
 }
