@@ -16,6 +16,7 @@ BUILD_DIR := ./build
 SRC_DIR := ./src
 INC_DIRS := ./include
 LIB_DIRS := ./lib
+NEED_CINI := cini # set this to nothing to disable custom cini
 
 ifeq ($(OS), macOS)
 INC_DIRS += /opt/homebrew/include/
@@ -23,7 +24,9 @@ LIB_DIRS += /opt/homebrew/lib/
 endif
 
 ifeq ($(OS), Linux)
-INC_DIRS += /usr/include/
+ifneq ("$(wildcard $(PATH_TO_FILE))","")
+NEED_CINI :=
+endif
 endif
 
 # for windows the SDL has to be installed manually in the lib and include folders
