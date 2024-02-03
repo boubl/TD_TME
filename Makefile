@@ -24,7 +24,6 @@ endif
 
 ifeq ($(OS), Linux)
 INC_DIRS += /usr/include/
-LIB_DIRS += /usr/lib/x86_64-linux-gnu
 endif
 
 # for windows the SDL has to be installed manually in the lib and include folders

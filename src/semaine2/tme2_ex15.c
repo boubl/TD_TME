@@ -36,7 +36,7 @@ void triangle(int width, int height, float epsilon) {
         cy = cyp;
 
         // enfin on mets à jour la distance entre A et B
-        int distance = (ax - bx) * (ax - bx) + (ay - by) * (ay - by);
+        distance = (ax - bx) * (ax - bx) + (ay - by) * (ay - by);
     }
 }
 
