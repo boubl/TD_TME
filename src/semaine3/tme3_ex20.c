@@ -15,8 +15,8 @@ int racines(int a, int b, int c, float *r1, float *r2) {
     int delta;
     int nb_racines = nb_racines_delta(a, b, c, &delta);
     if (nb_racines == 2) {
-        *r1 = (-b - sqrtf((float)delta)) / (2 * a);
-        *r2 = (-b + sqrtf((float)delta)) / (2 * a);
+        *r1 = (-b - sqrt(delta)) / (2 * a);
+        *r2 = (-b + sqrt(delta)) / (2 * a);
     } else if (nb_racines == 1) {
         *r1 = -b / (float)(2 * a);
     }

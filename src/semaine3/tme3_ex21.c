@@ -63,7 +63,7 @@ int score(int ordi, int joueur, int *points_o, int *points_j) {
      augmente de 1 le score de l'ordinateur si le coup de l'ordinateur est gagnant */
     if (ordi == joueur)
         return 0;
-    else if ((ordi > joueur && joueur != PIERRE) || ordi == PIERRE) {
+    else if (((ordi - joueur) % 2 == 0) ? (ordi < joueur) : (ordi > joueur)) {
         (*points_o)++;
         return 2;
     } else {
@@ -86,7 +86,8 @@ void jeu() {
 
     printf("Jouons a Pierre/Feuille/Ciseaux!\n");
 
-    int points_o, points_j = 0;
+    int points_o = 0;
+    int points_j = 0;
     while (points_o < POINTSGAGNANTS && points_j < POINTSGAGNANTS) {
         if (points_o != 0 && points_j != 0) {
             // n'affiche ce message que apres la premiere manche
