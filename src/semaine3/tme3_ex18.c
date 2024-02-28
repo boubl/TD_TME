@@ -7,15 +7,15 @@ void echange(int *a, int *b) {
     *b = temp;
 }
 
-void tri(int *a, int *b) {
+void tri_croissant(int *a, int *b) {
     if (*a > *b)
         echange(a, b);
 }
 
 void tri_3(int *a, int *b, int *c) {
-    tri(a, b);
-    tri(b, c);
-    tri(a, b);
+    tri_croissant(a, b);
+    tri_croissant(b, c);
+    tri_croissant(a, b);
 }
 
 int main() {

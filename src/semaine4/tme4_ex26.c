@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-void fusion(int *tab1, int taille1, int *tab2, int taille2, int *buf) {
+int* fusion(int *tab1, int taille1, int *tab2, int taille2) {
+    int *buf = malloc(sizeof(int) * (taille1 + taille2));
     int i1 = 0, i2 = 0, ibuf = 0;
     while (i1 < taille1 && i2 < taille2) {
         if (tab1[i1] < tab2[i2]) {
@@ -28,6 +30,7 @@ void fusion(int *tab1, int taille1, int *tab2, int taille2, int *buf) {
         buf[ibuf] = tab[i];
         ibuf++;
     }
+    return buf;
 }
 
 void print_tab(int *tab, int size) {
@@ -43,7 +46,6 @@ void print_tab(int *tab, int size) {
 int main() {
     int odd[] = {1, 3, 5, 7, 9};
     int even[] = {0, 2, 4, 6, 8, 10};
-    int buf[11];
-    fusion(odd, 5, even, 6, buf);
+    int *buf = fusion(odd, 5, even, 6);
     print_tab(buf, 11);
 }

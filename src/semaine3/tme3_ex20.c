@@ -3,12 +3,12 @@
 
 int nb_racines(int a, int b, int c) {
     int delta = b * b - 4 * a * c;
-    return (int[]){0, 1, 2}[(delta > 0) - (delta < 0) + 1];
+    return (delta > 0) - (delta < 0) + 1;
 }
 
 int nb_racines_delta(int a, int b, int c, int *delta) {
     *delta = b * b - 4 * a * c;
-    return (int[]){0, 1, 2}[(*delta > 0) - (*delta < 0) + 1];
+    return (*delta > 0) - (*delta < 0) + 1;
 }
 
 int racines(int a, int b, int c, float *r1, float *r2) {
