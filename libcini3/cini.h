@@ -54,4 +54,8 @@ void CINI_draw_int_table(int x, int y, int tab[], int size, char *bg_color, char
 void CINI_draw_char_table(int x, int y, char tab[], int size, char *bg_color, char *fg_color);
 void CINI_draw_float_table(int x, int y, float tab[], int size, char *bg_color, char *fg_color);
 
+// custom
+
+void CINI_ForceUpdate();
+
 #endif

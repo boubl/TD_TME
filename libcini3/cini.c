@@ -1,6 +1,7 @@
 #include "cini.h"
 #include "SDL_rect.h"
 #include "SDL_render.h"
+#include "SDL_surface.h"
 #include <SDL.h>
 // pour l'affichage de polices
 #include <SDL_ttf.h>
@@ -776,6 +777,17 @@ void CINI_loop() {
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
     }
+    SDL_SetRenderTarget(renderer, texture);
+}
+
+//-------------- Fonction custom
+
+void CINI_ForceUpdate() {
+    SDL_RenderPresent(renderer);
+    SDL_SetRenderTarget(renderer, NULL);
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderPresent(renderer);
     SDL_SetRenderTarget(renderer, texture);
 }
 

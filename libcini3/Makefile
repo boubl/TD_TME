@@ -3,33 +3,33 @@ UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux) #LINUX
 OS := Linux
 INCDIRS := -I/usr/include/SDL2 -I/usr/include/freetype2
+LIBDIRS := -L/usr/lib/x86_64-linux-gnu
+CHECK_SDL
 endif
 
 ifeq ($(UNAME_S), Darwin) #APPLE
 OS := macOS
 INCDIRS := -I/opt/homebrew/include/SDL2 -I/opt/homebrew/include/freetype2
-endif
-
-ifeq ($(OS), Windows_NT) #WINDOWS
-OS := Windows
-INCDIRS := -I../include/SDL2 -I../include/freetype2
+LIBDIRS := -L/opt/homebrew/lib
 endif
 
 C_FLAGS = -Wall -g -fPIC
 
-all : libcini.a
+all: check libcini.so
 
-cini_h : cini.h
-	mkdir -p ../include
-	cp cini.h ../include/
+check:
+ifneq ("$(wildcard /usr/include/cini.h)","")
+	@echo 
+endif
 
-cini.o : cini.c cini_h
-	${CC} -c cini.c $(INCDIRS) ${C_FLAGS}
+cini.o: cini.c
+	$(CC) -c -o cini.o cini.c $(INCDIRS) $(C_FLAGS)
 
-libcini.a : cini.o
-	ar -q libcini.a cini.o
-	mkdir -p ../lib
-	cp libcini.a ../lib/
+libcini.so: cini.o
+	$(CC) -shared -o $@ $< -L /opt/homebrew/lib/ -lSDL2 -lSDL2_ttf
+	mkdir -p include/ lib/
+	cp $@ lib/
+	cp cini.h include/
 
-clean :
-	rm *.o *.a ../lib/libcini.a ../include/cini.h
+clean:
+	rm -r *.o *.so lib/ include/

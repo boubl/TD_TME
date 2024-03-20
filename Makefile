@@ -1,46 +1,30 @@
 UNAME_S := $(shell uname -s)
 
-ifeq ($(UNAME_S), Linux) #LINUX
-OS := Linux
-endif
-
-ifeq ($(UNAME_S), Darwin) #APPLE
-OS := macOS
-endif
-
-ifeq ($(OS), Windows_NT) #WINDOWS
-OS := Windows
-endif
-
 BUILD_DIR := ./build
 SRC_DIR := ./src
 INC_DIRS := ./include
-LIB_DIRS := ./lib
+LIB_DIRS := ./libcini3/lib/
 NEED_CINI := cini
 
-ifeq ($(OS), macOS)
-INC_DIRS += /opt/homebrew/include/
-LIB_DIRS += /opt/homebrew/lib/
-endif
-
-ifeq ($(OS), Linux)
-# check if a native cini is on the computer
+ifeq ($(UNAME_S), Linux) #LINUX
+OS := Linux
 INC_DIRS += /usr/include/
+# check if a native cini is on the computer
 ifneq ("$(wildcard /usr/include/cini.h)","")
 NEED_CINI :=
 endif
 endif
 
-# for windows the SDL has to be installed manually in the lib and include folders
+ifeq ($(UNAME_S), Darwin) #APPLE
+OS := macOS
+INC_DIRS += /opt/homebrew/include/
+LIB_DIRS += /opt/homebrew/lib/
+endif
 
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 LIB_DIR_FLAGS := $(addprefix -L,$(LIB_DIRS))
 
-LIBS := cini m #we don't care about including everything for everything
-
-ifeq ($(NEED_CINI),cini)
-LIBS += SDL2 SDL2_ttf
-endif
+LIBS := cini m SDL2# we don't care about including everything for everything, the linker will optimize things for us
 
 LIBS_FLAGS := $(addprefix -l,$(LIBS))
 
@@ -53,14 +37,18 @@ OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%)
 CFLAGS := -Wall $(INC_FLAGS) $(LIB_DIR_FLAGS) $(LIBS_FLAGS)
 
 # Build all targets.
+.PHONY: all
 all: $(NEED_CINI) $(OBJS)
 
 .PHONY: cini
-cini: ./lib/libcini.a ./include/cini.h
+cini: libcini3/include/cini.h libcini3/lib/libcini.so
+	@mkdir -p include/ lib/
+	@cp libcini3/lib/libcini.so lib
+	@cp libcini3/include/cini.h include
 
-./include/cini.h: ./lib/libcini.a
+libcini3/include/cini.h: libcini3/lib/libcini.so
 
-./lib/libcini.a:
+libcini3/lib/libcini.so:
 	$(MAKE) -C ./libcini3/
 
 # Build step for C source
@@ -71,4 +59,16 @@ $(BUILD_DIR)/%: $(SRC_DIR)/%.c
 .PHONY: clean
 clean:
 	rm -rf $(BUILD_DIR)
+
+.PHONY: rebuild
+rebuild: clean
 	$(MAKE) clean -C ./libcini3/
+	$(MAKE) all
+
+.PHONY: install
+install: libcini.so
+	cp libcini.so /usr/local/lib/
+
+.PHONY: uninstall
+uninstall: libcini.so
+	rm /usr/local/lib/libcini.so
