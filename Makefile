@@ -65,10 +65,16 @@ rebuild: clean
 	$(MAKE) clean -C ./libcini3/
 	$(MAKE) all
 
+.PHONY: copy_cini
+copy_cini: libcini3/lib/libcini.so
+	ln -s "$(realpath ./libcini3/libcini.so)" "$(realpath ./)"
+
 .PHONY: install
-install: libcini.so
-	cp libcini.so /usr/local/lib/
+install: libcini3/lib/libcini.so
+	cp libcini3/lib/cini.h /usr/local/include/
+	cp libcini3/lib/libcini.so /usr/local/lib/
 
 .PHONY: uninstall
-uninstall: libcini.so
+uninstall: /usr/local/lib/libcini.so /usr/local/include/cini.h
 	rm /usr/local/lib/libcini.so
+	rm /usr/local/include/cini.h
