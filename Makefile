@@ -34,7 +34,7 @@ SRCS := $(shell find $(SRC_DIR) -name '*.c')
 
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%)
 
-CFLAGS := -Wall $(INC_FLAGS) $(LIB_DIR_FLAGS) $(LIBS_FLAGS)
+CFLAGS := -Wall -Wl,-rpath,$(realpath ./libcini3/lib/) $(INC_FLAGS) $(LIB_DIR_FLAGS) $(LIBS_FLAGS)
 
 # Build all targets.
 .PHONY: all
@@ -55,6 +55,9 @@ libcini3/lib/libcini.so:
 $(BUILD_DIR)/%: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) -o $@ $< $(CFLAGS)
+ifeq ($(UNAME_S), Darwin)
+	install_name_tool -change libcini.so $(realpath ./libcini3/lib/libcini.so) $@
+endif
 
 .PHONY: clean
 clean:
@@ -71,7 +74,7 @@ copy_cini: libcini3/lib/libcini.so
 
 .PHONY: install
 install: libcini3/lib/libcini.so
-	cp libcini3/lib/cini.h /usr/local/include/
+	cp libcini3/include/cini.h /usr/local/include/
 	cp libcini3/lib/libcini.so /usr/local/lib/
 
 .PHONY: uninstall

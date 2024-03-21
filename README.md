@@ -2,22 +2,6 @@
 
 welcom 2 dis awsom repo :)
 
-pour installer cini (si vous avez les droits d'admin)
-```shell
-sudo make install
-```
-
-pour desinstaller cini
-```shell
-sudo make uninstall
-```
-
-**si vous avez pas les droits d'admin**
-```shell
-make copy_cini
-```
-et lancez tout les executables depuis `./build/semaineX/programme`
-
 Ce repo contient:
 
 - des exos de *TP* (ou *TME*)

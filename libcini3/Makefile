@@ -4,7 +4,6 @@ ifeq ($(UNAME_S), Linux) #LINUX
 OS := Linux
 INCDIRS := -I/usr/include/SDL2 -I/usr/include/freetype2
 LIBDIRS := -L/usr/lib/x86_64-linux-gnu
-CHECK_SDL
 endif
 
 ifeq ($(UNAME_S), Darwin) #APPLE
